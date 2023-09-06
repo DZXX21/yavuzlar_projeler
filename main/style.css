@@ -104,3 +104,21 @@ ul li span{
 }ul li span:hover{
     background: #edeef0;
 }
+ul li button.edit {
+    background: #0a74da;
+    color: #fff;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+ul li button.delete {
+    background: #ff3737;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
