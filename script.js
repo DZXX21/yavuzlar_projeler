@@ -15,4 +15,24 @@ function addTask(){
         li.appendChild(span);
     }
     inputBox.value="";
+    saveData();
 }
+listContainer.addEventListener("click", function(e) {
+    if (e.target.tagName === "LI") {
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if (e.target.nodeName === "SPAN") { // Düzeltme 1: targetName -> nodeName
+        e.target.parentElement.remove(); // Düzeltme 2: .remova() -> .remove()
+        saveData();
+    }
+}, false);
+
+function saveData(){
+    localStorage.setItem("data",listContainer.innerHTML);
+}
+function showTask(){
+    listContainer.innerHTML=localStorage.getItem("data")
+}
+showTask();
+
