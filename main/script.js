@@ -56,7 +56,6 @@ listContainer.addEventListener("click", function (e) {
         editTask(e.target);
     }
 });
-
 function editTask(button) {
     const listItem = button.parentElement;
     const editInput = listItem.querySelector('input.edit-input');
@@ -65,7 +64,10 @@ function editTask(button) {
 
     if (isEditing) {
         // Düzenleme modundan çık
-        label.innerText = editInput.value;
+        const editedText = editInput.value.trim();
+        if (editedText !== "") {
+            label.innerText = editedText;
+        }
         button.innerText = "Edit";
     } else {
         // Düzenleme moduna gir
@@ -75,7 +77,12 @@ function editTask(button) {
 
     listItem.classList.toggle("editMode");
     saveData();
+    
+    // Düzenleme işlemi sonrası input alanını temizle
+    editInput.value = "";
 }
+
+
 
 // Görevi silme işlevi
 listContainer.addEventListener("click", function (e) {
