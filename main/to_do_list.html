@@ -14,6 +14,18 @@
         span {
             margin-right: 10px;
         }
+
+        /* Arama kutusu ve butonun boyutlarını ayarlayın */
+        #search-box {
+            width: 100px;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        #search-button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -24,14 +36,12 @@
             <div class="row">
                 <input type="text" id="input-box" placeholder="Add your text">
                 <button onclick="addTask()">Add</button>
-           
-
+                <input type="text" id="search-box" placeholder="Search...">
+                <button onclick="searchTask()">Search</button>
             </div>
-            
+
             <ul id="list-container">
                 <!-- To-do list items will be added here -->
-                     <ul id="list-container">
-
             </ul>
         </div>
     </div>

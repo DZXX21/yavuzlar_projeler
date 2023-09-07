@@ -82,8 +82,6 @@ function editTask(button) {
     editInput.value = "";
 }
 
-
-
 // Görevi silme işlevi
 listContainer.addEventListener("click", function (e) {
     if (e.target.classList.contains("delete")) {
@@ -96,3 +94,24 @@ function deleteTask(button) {
     listItem.remove();
     saveData();
 }
+
+// Arama işlevi
+function searchTask() {
+    const searchText = document.getElementById("search-box").value.trim().toLowerCase();
+    const tasks = listContainer.getElementsByTagName("li");
+
+    for (let i = 0; i < tasks.length; i++) {
+        const label = tasks[i].getElementsByTagName("label")[0];
+        const taskText = label.textContent.toLowerCase();
+
+        if (taskText.includes(searchText)) {
+            tasks[i].style.display = "flex"; // Eşleşenleri göster
+        } else {
+            tasks[i].style.display = "none"; // Eşleşmeyenleri gizle
+        }
+    }
+}
+
+// Arama butonuna tıklamada arama işlevini çağır
+const searchButton = document.getElementById("search-button");
+searchButton.addEventListener("click", searchTask);
