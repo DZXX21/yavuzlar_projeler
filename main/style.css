@@ -19,6 +19,7 @@
     margin: 100px auto 20px;
     padding: 40px 30px 70px;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
 }
 
 .todo-app h2 {
@@ -41,6 +42,7 @@
     border-radius: 10px;
     margin-bottom: 25px;
     padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
 }
 
 input {
@@ -54,19 +56,24 @@ input {
 button {
     border: none;
     outline: none;
-    padding: 16px 50px;
+    padding: 12px 24px; /* Increase button padding for better appearance */
     background: #ff5945;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
+    transition: background-color 0.2s ease; /* Add a smooth hover effect */
+}
+
+button:hover {
+    background: #ff372e; /* Change button color on hover */
 }
 
 ul li {
     list-style: none;
     font-size: 17px;
     padding: 12px 8px 12px 50px;
-    user-select: none;
+    user-select: none; /* Prevent text selection */
     cursor: pointer;
     position: relative;
 }
@@ -84,14 +91,11 @@ ul li::before {
     left: 8px;
 }
 
-ul li.checked {
-    color: #555;
-    text-decoration: line-through;
-}
-ul li.checked::before{
+ul li.checked::before {
     background-image: url(img/images.png);
 }
-ul li span{
+
+ul li span {
     position: absolute;
     right: 0px;
     top: 5px;
@@ -101,9 +105,12 @@ ul li span{
     color: #555;
     line-height: 40px;
     text-align: center;
-}ul li span:hover{
+}
+
+ul li span:hover {
     background: #edeef0;
 }
+
 ul li button.edit {
     background: #0a74da;
     color: #fff;
