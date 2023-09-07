@@ -6,26 +6,7 @@
     <title>To-do List</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        li {
-            display: flex;
-            align-items: center;
-        }
-
-        span {
-            margin-right: 10px;
-        }
-
-        /* Arama kutusu ve butonun boyutlarını ayarlayın */
-        #search-box {
-            width: 100px;
-            padding: 5px;
-            font-size: 14px;
-        }
-
-        #search-button {
-            padding: 5px 10px;
-            font-size: 14px;
-        }
+        /* CSS stilleri buraya eklenir */
     </style>
 </head>
 
@@ -37,7 +18,8 @@
                 <input type="text" id="input-box" placeholder="Add your text">
                 <button onclick="addTask()">Add</button>
                 <input type="text" id="search-box" placeholder="Search...">
-                <button onclick="searchTask()">Search</button>
+                <button id="search-button">Search</button>
+                <button id="clear-button" class="clear-button">x</button>
             </div>
 
             <ul id="list-container">

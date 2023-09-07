@@ -1,16 +1,20 @@
+// JavaScript kodu (script.js)
+
 // HTML içindeki elementleri alma
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const searchBox = document.getElementById("search-box");
+const clearButton = document.getElementById("clear-button");
 
 // Görev eklemek için fonksiyon
 function addTask() {
     const taskText = inputBox.value.trim();
-    
+
     if (taskText === "") {
         alert("You must write something!");
         return;
     }
-    
+
     const listItem = document.createElement("li");
     listItem.innerHTML = `
         <label>${taskText}</label>
@@ -18,7 +22,7 @@ function addTask() {
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>
     `;
-    
+
     listContainer.appendChild(listItem);
     inputBox.value = "";
     saveData();
@@ -27,7 +31,7 @@ function addTask() {
 // Liste öğelerine tıklama işlevi
 listContainer.addEventListener("click", function (e) {
     const clickedElement = e.target;
-    
+
     if (clickedElement.tagName === "INPUT" || clickedElement.tagName === "LABEL") {
         const listItem = clickedElement.parentElement;
         listItem.classList.toggle("checked");
@@ -56,6 +60,7 @@ listContainer.addEventListener("click", function (e) {
         editTask(e.target);
     }
 });
+
 function editTask(button) {
     const listItem = button.parentElement;
     const editInput = listItem.querySelector('input.edit-input');
@@ -77,7 +82,7 @@ function editTask(button) {
 
     listItem.classList.toggle("editMode");
     saveData();
-    
+
     // Düzenleme işlemi sonrası input alanını temizle
     editInput.value = "";
 }
@@ -97,7 +102,7 @@ function deleteTask(button) {
 
 // Arama işlevi
 function searchTask() {
-    const searchText = document.getElementById("search-box").value.trim().toLowerCase();
+    const searchText = searchBox.value.trim().toLowerCase();
     const tasks = listContainer.getElementsByTagName("li");
 
     for (let i = 0; i < tasks.length; i++) {
@@ -115,3 +120,9 @@ function searchTask() {
 // Arama butonuna tıklamada arama işlevini çağır
 const searchButton = document.getElementById("search-button");
 searchButton.addEventListener("click", searchTask);
+
+// Arama kutusunu temizlemek ve filtreleri sıfırlamak için
+clearButton.addEventListener("click", function () {
+    searchBox.value = ""; // Arama kutusunu temizle
+    searchTask(); // Arama filtreyi sıfırla
+});
