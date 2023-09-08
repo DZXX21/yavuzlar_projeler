@@ -153,4 +153,52 @@ main {
 
 .task .actions .delete {
 	color: crimson;
+}/* Arama butonu stili */
+#search-task-button {
+    background-color: var(--pink);
+    color: var(--light);
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.4s;
 }
+
+#search-task-button:hover {
+    background-color: var(--purple);
+}
+
+#search-task-button:active {
+    opacity: 0.8;
+}
+/* Arama kutusu stilini güzelleştirme */
+#search-task-input::placeholder {
+    color: var(--grey);
+    font-weight: bold; /* Yazının kalın görünmesini sağlar */
+}
+
+/* Arama butonu stilini güzelleştirme */
+#search-task-button {
+    background-color: var(--pink);
+    color: var(--light);
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#search-task-button:hover {
+    background-color: var(--purple);
+}
+/* Arama kutusunun stilini güzelleştirme */
+#search-task-input::placeholder {
+    color: var(--pink); /* Yazı rengini pembe yapın */
+    font-weight: bold; /* Yazının kalın görünmesini sağlar */
+    opacity: 0.8; /* Yazının biraz daha solgun olmasını sağlar */
+}
+
