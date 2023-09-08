@@ -1,5 +1,3 @@
-// JavaScript kodu (script.js)
-
 // HTML içindeki elementleri alma
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
@@ -16,8 +14,17 @@ function addTask() {
     }
 
     const listItem = document.createElement("li");
-    listItem.innerHTML = `
-        <label>${taskText}</label>
+    const label = document.createElement("label");
+
+    // Eğer metinde 15 kelime veya daha fazla varsa, yeni satıra geç
+    if (countWords(taskText) >= 15) {
+        label.innerHTML = taskText.replace(/\n/g, "<br>"); // Metindeki yeni satırları <br> ile değiştir
+    } else {
+        label.innerText = taskText;
+    }
+
+    listItem.appendChild(label);
+    listItem.innerHTML += `
         <input type="text" class="edit-input">
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>
@@ -28,6 +35,11 @@ function addTask() {
     saveData();
 }
 
+// Kelime sayısını hesaplayan yardımcı işlev
+function countWords(text) {
+    return text.split(/\s+/).filter(word => word !== "").length;
+}
+
 // Liste öğelerine tıklama işlevi
 listContainer.addEventListener("click", function (e) {
     const clickedElement = e.target;
@@ -36,6 +48,10 @@ listContainer.addEventListener("click", function (e) {
         const listItem = clickedElement.parentElement;
         listItem.classList.toggle("checked");
         saveData();
+    } else if (clickedElement.classList.contains("edit")) {
+        editTask(clickedElement);
+    } else if (clickedElement.classList.contains("delete")) {
+        deleteTask(clickedElement);
     }
 });
 
@@ -55,12 +71,6 @@ function showTask() {
 showTask();
 
 // Görev düzenleme işlevi
-listContainer.addEventListener("click", function (e) {
-    if (e.target.classList.contains("edit")) {
-        editTask(e.target);
-    }
-});
-
 function editTask(button) {
     const listItem = button.parentElement;
     const editInput = listItem.querySelector('input.edit-input');
@@ -71,29 +81,20 @@ function editTask(button) {
         // Düzenleme modundan çık
         const editedText = editInput.value.trim();
         if (editedText !== "") {
-            label.innerText = editedText;
+            label.innerHTML = editedText.replace(/\n/g, "<br>"); // Metindeki yeni satırları <br> ile değiştir
         }
         button.innerText = "Edit";
     } else {
         // Düzenleme moduna gir
-        editInput.value = label.innerText;
+        editInput.value = label.textContent.replace(/<br>/g, "\n"); // <br> etiketlerini yeni satırlara dönüştür
         button.innerText = "Save";
     }
 
     listItem.classList.toggle("editMode");
     saveData();
-
-    // Düzenleme işlemi sonrası input alanını temizle
-    editInput.value = "";
 }
 
 // Görevi silme işlevi
-listContainer.addEventListener("click", function (e) {
-    if (e.target.classList.contains("delete")) {
-        deleteTask(e.target);
-    }
-});
-
 function deleteTask(button) {
     const listItem = button.parentElement;
     listItem.remove();

@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>To-do List</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* CSS stilleri buraya eklenir */
-    </style>
 </head>
 
 <body>
@@ -23,7 +20,13 @@
             </div>
 
             <ul id="list-container">
-                <!-- To-do list items will be added here -->
+                <li>
+                    <span class="task-text">Yeni Görev</span>
+                    <button onclick="editTask(this)">Düzenle</button>
+                    <button onclick="deleteTask(this)">Sil</button>
+                    <label id="myLabel">Çok uzun bir metin girin:</label>
+
+                </li>
             </ul>
         </div>
     </div>

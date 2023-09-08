@@ -1,25 +1,30 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(132deg, #5a6781, #f92f01);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(132deg, #5a6781, #f92f01);
-    padding: 10px;
+    max-width: 540px;
+    padding: 40px 30px 70px;
 }
 
 .todo-app {
-    width: 100%;
-    max-width: 540px;
-    background: #fff;
-    margin: 100px auto 20px;
-    padding: 40px 30px 70px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+    text-align: center;
 }
 
 .todo-app h2 {
@@ -42,10 +47,11 @@
     border-radius: 10px;
     margin-bottom: 25px;
     padding: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input {
+/* Giriş kutuları ve düğmeler */
+input[type="text"] {
     flex: 1;
     border: none;
     outline: none;
@@ -56,29 +62,41 @@ input {
 button {
     border: none;
     outline: none;
-    padding: 12px 24px; /* Increase button padding for better appearance */
+    padding: 12px 24px;
     background: #ff5945;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
-    transition: background-color 0.2s ease; /* Add a smooth hover effect */
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
-    background: #ff372e; /* Change button color on hover */
+    background: #ff372e;
 }
 
-ul li {
+/* Görevlerin Listesi */
+ul {
     list-style: none;
+    padding: 0;
+}
+
+li {
+    position: relative;
     font-size: 17px;
     padding: 12px 8px 12px 50px;
-    user-select: none; /* Prevent text selection */
+    user-select: none;
     cursor: pointer;
-    position: relative;
+    margin-bottom: 10px;
+    background: #edeef0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    width: 100%; /* Bu genişliği ekleyin */
 }
 
-ul li::before {
+li::before {
     content: "";
     position: absolute;
     height: 28px;
@@ -87,31 +105,28 @@ ul li::before {
     background-image: url(img/uncheck.png);
     background-size: cover;
     background-position: center;
-    top: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     left: 8px;
 }
 
-ul li.checked::before {
+li.checked::before {
     background-image: url(img/images.png);
 }
 
-ul li span {
-    position: absolute;
-    right: 0px;
-    top: 5px;
-    width: 40px;
-    height: 40px;
+li span {
+    flex: 1;
     font-size: 22px;
     color: #555;
-    line-height: 40px;
-    text-align: center;
+    text-align: left;
+    margin-right: 10px;
 }
 
-ul li span:hover {
+li span:hover {
     background: #edeef0;
 }
 
-ul li button.edit {
+li button.edit {
     background: #0a74da;
     color: #fff;
     padding: 10px 20px;
@@ -121,15 +136,17 @@ ul li button.edit {
     cursor: pointer;
 }
 
-ul li button.delete {
+li button.delete {
     background: #ff3737;
     color: #fff;
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 16px;
-    cursor: pointer;
+    width: 100px;
+    height: 40px;
 }
-/* Arama kutusu ve butonlar için boyut ayarı */
+
+/* Arama kutusu ve butonlar */
 #search-box {
     width: 80px;
     padding: 5px;
@@ -138,6 +155,34 @@ ul li button.delete {
 
 #search-button,
 #clear-button {
-    padding: 8px 12px; /* Düğme boyutunu ayarlayın */
+    padding: 8px 12px;
     font-size: 14px;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    /* Diğer stil özellikleri */
+}
+
+input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    max-width: 80%; /* Maksimum genişliği sınırla */
+}
+
+.input-container button {
+    width: auto; /* Otomatik genişlik */
+    height: auto; /* Otomatik yükseklik */
+}
+.label-container {
+    flex: 1;
+    /* Diğer stil özellikleri */
+}
+  
+label {
+    word-wrap: break-word; /* Uzun kelimeleri otomatik olarak alt satıra alır */
+    white-space: pre-wrap; /* Boşlukları ve satır sonlarını korur */
 }
