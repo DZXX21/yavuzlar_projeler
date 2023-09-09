@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="main.css" />
 </head>
 <body>
+    <h1><img src="img/yavuzlar.png" alt="Yavuzlar Logo">Yavuzlar</h1>
+
     
     <header>
         <h1>Yavuzlar</h1>
         <div style="position: absolute; top: 20px; right: 20px;">
-            <!-- Arama alanı ve butonu yukarı sağ köşeye yerleştirme -->
             <input 
                 type="text" 
                 name="search-task-input" 
@@ -29,30 +30,18 @@
                 type="text" 
                 name="new-task-input" 
                 id="new-task-input" 
-                placeholder="What do you have planned?" />
+                placeholder="Planlar NE ?" />
             <input 
                 type="submit"
                 id="new-task-submit" 
-                value="Add task" />
+                value="EKLE" />
         </form>
     </header>
     <main>
         <section class="task-list">
-            <h2>Tasks</h2>
+            <h2>Listeler</h2>
             <div id="tasks">
-                <!-- <div class="task">
-                    <div class="content">
-                        <input 
-                            type="text" 
-                            class="text" 
-                            value="A new task"
-                            readonly>
-                    </div>
-                    <div class="actions">
-                        <button class="edit">Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div> -->
+         
             </div>
         </section>
     </main>

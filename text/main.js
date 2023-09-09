@@ -5,10 +5,8 @@ window.addEventListener('load', () => {
     const searchInput = document.querySelector("#search-task-input");
     const searchButton = document.querySelector("#search-task-button");
 
-    // Sayfa yüklendiğinde kaydedilmiş görevleri al
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    // Kaydedilmiş görevleri listeye ekle
     savedTasks.forEach(savedTask => {
         const task_el = createTaskElement(savedTask);
         list_el.appendChild(task_el);
@@ -20,7 +18,6 @@ window.addEventListener('load', () => {
         const task = input.value;
         const task_el = createTaskElement(task);
 
-        // Yeni görevi kaydet
         savedTasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(savedTasks));
 
@@ -29,7 +26,6 @@ window.addEventListener('load', () => {
         input.value = '';
     });
 
-    // Arama işlevselliği
     searchButton.addEventListener('click', () => {
         const searchTerm = searchInput.value.toLowerCase();
         const tasks = document.querySelectorAll('.task');
