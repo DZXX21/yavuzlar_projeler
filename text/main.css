@@ -1,11 +1,11 @@
 :root {
 	--dark: #092803;
 	--darker: #e3e3e3;
-	--darkest: #111827;
-	--grey: #040110;
-	--pink: #e7dae3;
-	--purple: #a06b2e;
-	--light: #b31212;
+	--darkest: #efeff0;
+	--grey: #121213;
+	--pink: #080808;
+	--purple: #0c0c0b;
+	--light: #101010;
 }
 
 * {
@@ -152,8 +152,8 @@ main {
 }
 
 .task .actions .delete {
-	color: crimson;
-}/* Arama butonu stili */
+	color: rgb(15, 14, 14);
+}
 #search-task-button {
     background-color: var(--pink);
     color: var(--light);
@@ -203,19 +203,22 @@ img {
 	height: 400px;
 }
 input[name="search-task-input"] {
-	color: rgb(7, 7, 7);
+	color: rgb(215, 15, 15);
 }
 input[name="search-task-input"] {
-	color: rgb(23, 22, 22);
+	color: rgb(207, 30, 30);
 	font-weight: bold;
 }
 input[name="search-task-input"] {
-	color: rgb(9, 9, 9);
+	color: rgb(225, 213, 213);
 	font-weight: bold;
 	background-color: white; 
 	border: 2px solid #007bff; 
 	border-radius: 5px; 
 	padding: 10px; 
-	
 
-
+}
+button#search-task-button {
+	background-color: white;
+	color: black; 
+}
