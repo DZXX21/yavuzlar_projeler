@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS stilleri buraya eklenir */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <h2>To-do List <img src="/DENEM2İMG/uncheck.png" alt="To-do List Image"></h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add your text">
+                <button onclick="addTask()">Add</button>
+                <input type="text" id="search-box" placeholder="Search...">
+                <button id="search-button">Search</button>
+                <button id="clear-button" class="clear-button">x</button>
+            </div>
+
+            <ul id="list-container">
+                <!-- To-do list items will be added here -->
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
