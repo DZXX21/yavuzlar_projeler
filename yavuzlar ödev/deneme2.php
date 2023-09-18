@@ -4,22 +4,18 @@ $username = "kullanici_adi"; // MySQL kullanıcı adı
 $password = "parola"; // MySQL kullanıcı parolası
 $database = "veritabani_adi"; // Kullanılacak veritabanının adı
 
-// MySQL veritabanına bağlanma işlemi
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Bağlantıyı kontrol et
 if ($conn->connect_error) {
     die("Bağlantı hatası: " . $conn->connect_error);
 }
 
-// Üye eklemek için POST verilerini al
 if (isset($_POST['ekle'])) {
     $ad = $_POST['ad'];
     $soyad = $_POST['soyad'];
     $email = $_POST['email'];
     $sifre = $_POST['sifre'];
 
-    // Veritabanına yeni üye ekleme
     $sql = "INSERT INTO uyeler (ad, soyad, email, sifre) VALUES ('$ad', '$soyad', '$email', '$sifre')";
 
     if ($conn->query($sql) === TRUE) {
@@ -29,9 +25,8 @@ if (isset($_POST['ekle'])) {
     }
 }
 
-// Diğer işlemler için gerekli kodları buraya ekleyebilirsiniz.
 
-// Bağlantıyı kapat
+
 $conn->close();
 ?>
 
@@ -40,7 +35,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Üye Yönetimi</title>
-    <!-- CSS ve diğer HTML kodları buraya gelebilir -->
+
 </head>
 <body>
     <form method="POST" action="">
