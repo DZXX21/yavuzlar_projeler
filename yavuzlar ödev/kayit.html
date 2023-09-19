@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" lang="tr">
+    <title>Hacker HTML</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00ff00;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(2px, 2px);
+                text-shadow: -1px -1px #3bbb00;
+            }
+
+            25% {
+                transform: translate(-2px, -2px);
+                text-shadow: 2px -1px #3bbb00;
+            }
+
+            50% {
+                transform: translate(2px, -2px);
+                text-shadow: 1px 1px #3bbb00;
+            }
+
+            75% {
+                transform: translate(-2px, 2px);
+                text-shadow: -2px 1px #3bbb00;
+            }
+
+            100% {
+                transform: translate(2px, 2px);
+                text-shadow: -1px -1px #3bbb00;
+            }
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #00ff00;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            animation: neon 1s infinite;
+        }
+
+        .button:hover {
+            background-color: #3bbb00;
+            color: #ffffff;
+        }
+
+        @keyframes neon {
+            0% {
+                box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+            }
+
+            50% {
+                box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 30px #00ff00;
+            }
+
+            100% {
+                box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+            }
+        }
+
+        .terminal {
+            background-color: #000000;
+            padding: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            overflow: auto;
+            max-height: 200px;
+        }
+
+        .terminal pre {
+            margin: 0;
+            padding: 0;
+            color: #00ff00;
+        }
+
+        h2 {
+            color: #00ff00;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: glitch 2s infinite;
+        }
+
+        form {
+            margin-top: 40px;
+        }
+
+        label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .hack-input {
+            padding: 8px 12px;
+            font-size: 16px;
+            background-color: #000000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #00ff00;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            animation: neon 1s infinite;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00ff00;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to the Hacker Hub</h1>
+        <p>This site allows you to hack into passwords and breach databases.</p>
+        <div class="terminal">
+            <pre>
+        <code>
+        â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        <span style="color: #ff0000;">root@hacker$</span> <span style="color: #00ff00;">sudo hack</span>
+        <span style="color: #00ff00;">[sudo] password for root:</span> ********
+        <span style="color: #00ff00;">Hacking in progress...</span>
+        <span style="color: #00ff00;">Access granted.</span>
+        â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        </code>
+      </pre>
+        </div>
+        <a href="#" class="button" onclick="playSound()">Start Hacking</a>
+        <audio id="sound" src="hacker_sound.mp3"></audio>
+        <script>
+            function playSound() {
+                var audio = document.getElementById("sound");
+                audio.play();
+            }
+        </script>
+        <!-- Form in hack style -->
+        <h2>Hack Form</h2>
+        <form id="hack-form" action="process_form.php" method="post" onsubmit="redirectToGame(event)">
+           
+                <label for="ad">AD :</label>
+                <input type="text" id="ad" name="ad" class="hack-input" required>
+            
+                <label for="soyad">SOY AD:</label>
+                <input type="text" id="soyad" name="soyad" class="hack-input" required>
+            
+                <label for="ogrenci_no">Öğrenci Numarası</label>
+                <input type="text" id="ogrenci_no" name="ogrenci_no" class="hack-input" required>
+            
+                <label for="telefon">Telefon Numarası</label>
+                <input type="text" id="telefon" name="telefon" class="hack-input" required>
+            
+                <label for="bolum">Okul Bölümü:</label>
+                <input type="text" id="bolum" name="bolum" class="hack-input" required>
+            
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="hack-input" required>
+            
+                <label for="deneyim">Siber güvenlikle ilgili herhangi bir deneyiminiz var mı? (Örneğin, kurslar, sertifikalar, kişisel projeler vb).</label>
+                <input type="text" id="deneyim" name="deneyim" class="hack-input" required>
+            
+                <label for="ilgi">Siber güvenlik konusundaki ilginizi neden?</label>
+                <input type="text" id="ilgi" name="ilgi" class="hack-input" required>
+            
+                <label for="ilgi_alanlari">Hangi siber güvenlik alanlarına ilgi duyuyorsunuz? (Ağ güvenliği, sızma testleri, dijital forensikler, vb.)</label>
+                <input type="text" id="ilgi_alanlari" name="ilgi_alanlari" class="hack-input" required>
+            
+                <label for="kulup_deneyim">Daha önce herhangi bir siber güvenlik kulübünde veya ekip çalışmasında yer aldınız mı? (Varsa, lütfen açıklayın.)</label>
+                <input type="text" id="kulup_deneyim" name="kulup_deneyim" class="hack-input" required>
+            
+                <label for="haftalik_calisma_saatleri">Haftada kaç saat siber güvenlikle ilgili çalışmaya ayırabilirsiniz?</label>
+                <input type="text" id="haftalik_calisma_saatleri" name="haftalik_calisma_saatleri" class="hack-input" required>
+            
+                <label for="isbirligi_deneyim">Grup çalışmalarına katılmak ve projelerde işbirliği yapmak konusunda ne kadar deneyiminiz var?</label>
+                <input type="text" id="isbirligi_deneyim" name="isbirligi_deneyim" class="hack-input" required>
+            
+                <label for="programlama_dilleri">Hangi programlama dillerini biliyorsunuz veya kullanabiliyorsunuz? (Eğer varsa)</label>
+                <input type="text" id="programlama_dilleri" name="programlama_dilleri" class="hack-input" required>
+            
+                <label for="ozgecmis">Özgeçmişinizi kısaca açıklayın.</label>
+                <textarea id="ozgecmis" name="ozgecmis" class="hack-input" required></textarea>
+            
+                <label for="bilgi_paylasimi">Kulüp üyeleri arasında bilgi paylaşımına nasıl katkıda bulunmayı planlıyorsunuz?</label>
+                <textarea id="bilgi_paylasimi" name="bilgi_paylasimi" class="hack-input" required></textarea>
+            
+                <label for="kendini_gelistirme">Siber güvenlik alanında kendinizi nasıl geliştirmeyi düşünüyorsunuz?</label>
+                <textarea id="kendini_gelistirme" name="kendini_gelistirme" class="hack-input" required></textarea>
+                <input type="submit" value="Submit">
+               
+            </form>
+            
+
+
+
+
+
+
+
+
+           
+        </form>
+    </div>
+</body>
+
+</html>
