@@ -1,0 +1,91 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+#container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.task input[type="text"] {
+    border: none;
+    padding: 5px;
+    width: 70%;
+}
+
+.task input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.task button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-button::before {
+    content: "\270E"; 
+    margin-right: 5px;
+}
+
+.save-button::before {
+    content: "\2714";
+    margin-right: 5px;
+}
+
+.delete-button::before {
+    content: "\2716";
+    margin-right: 5px;
+}
+
+#search-bar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+}
+
+#search-input {
+    width: 100%;
+}
+
+#clear-search-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}.completed-task {
+    text-decoration: line-through;
+}
