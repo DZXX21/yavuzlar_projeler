@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const taskInput = document.getElementById("task");
     const addTaskButton = document.getElementById("add-task");
     const taskList = document.getElementById("task-list");
-    const searchInput = document.getElementById("search"); // Arama kutusu
+    const searchInput = document.getElementById("search"); 
     let editingTaskId = null;
 
     loadTasks();
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (e.target.dataset.editing !== "true") {
                 toggleTaskStatus(taskId);
 
-                // Checkbox işaretlendiğinde "Görev Yapıldı" görünümünü değiştirin
+                
                 const checkbox = e.target.querySelector(".completed-checkbox");
                 checkbox.checked = !checkbox.checked;
                 e.target.classList.toggle("completed");
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Arama kutusuna yazıldığında görevleri filtrele
+
     searchInput.addEventListener("input", function () {
         const searchTerm = searchInput.value.trim().toLowerCase();
         filterTasks(searchTerm);
@@ -147,22 +147,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-   // Arama kutusuna yazıldığında görevleri filtrele
+
 searchInput.addEventListener("input", function () {
     const searchTerm = searchInput.value.trim().toLowerCase();
     filterTasks(searchTerm);
 });
 
-function filterTasks(searchTerm) {
-    const tasks = document.querySelectorAll(".task-label");
-    tasks.forEach((task) => {
-        const taskText = task.textContent.trim().toLowerCase();
-        if (taskText.includes(searchTerm)) {
-            task.closest("li").style.display = "block";
-        } else {
-            task.closest("li").style.display = "none";
-        }
-    });
-}
+// Arama kutusuna yazıldığında görevleri filtrele
+searchInput.addEventListener("input", function () {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    filterTasks(searchTerm);
+});
+
+// Temizleme düğmesinin id'sini güncellediğinizden, yeni id'yi kullanın
+const clearSearchButton = document.getElementById("clear-search-button");
+clearSearchButton.addEventListener("click", function () {
+    searchInput.value = "";
+    filterTasks(""); // Tüm görevleri göster
+});
+
 
 });
