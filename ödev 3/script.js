@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const taskInput = document.getElementById("task");
     const addTaskButton = document.getElementById("add-task");
     const taskList = document.getElementById("task-list");
+    const searchInput = document.getElementById("search"); // Arama kutusu
     let editingTaskId = null;
 
     loadTasks();
@@ -23,6 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const taskId = e.target.dataset.id;
             if (e.target.dataset.editing !== "true") {
                 toggleTaskStatus(taskId);
+
+                // Checkbox işaretlendiğinde "Görev Yapıldı" görünümünü değiştirin
+                const checkbox = e.target.querySelector(".completed-checkbox");
+                checkbox.checked = !checkbox.checked;
+                e.target.classList.toggle("completed");
             }
         }
         if (e.target && e.target.classList.contains("delete")) {
@@ -43,6 +49,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Arama kutusuna yazıldığında görevleri filtrele
+    searchInput.addEventListener("input", function () {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        filterTasks(searchTerm);
+    });
+
     function loadTasks() {
         fetch("tasks.php")
             .then((response) => response.json())
@@ -52,12 +64,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const listItem = document.createElement("li");
                     listItem.innerHTML = `
                         <div class="task">
-                            <input type="checkbox" class="completed-checkbox" id="task-${task.id}" ${task.task_status ? 'checked' : ''}>
-                            <label for="task-${task.id}" class="task-label ${task.task_status ? 'completed' : ''}" data-id="${task.id}" data-editing="false">${task.task_name}</label>
+                            <input type="checkbox" class="custom-control-input completed-checkbox" id="task-${task.id}" ${task.task_status ? 'checked' : ''}>
+                            <label class="custom-control-label task-label ${task.task_status ? 'completed' : ''}" for="task-${task.id}" data-id="${task.id}" data-editing="false">${task.task_name}</label>
                         </div>
                         <div class="buttons">
-                            <button class="delete" data-id="${task.id}">Sil</button>
-                            <button class="edit" data-id="${task.id}">Düzenle</button>
+                            <button class="btn btn-danger delete" data-id="${task.id}">Sil</button>
+                            <button class="btn btn-warning edit" data-id="${task.id}">Düzenle</button>
                         </div>
                     `;
                     taskList.appendChild(listItem);
@@ -122,4 +134,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
     }
+
+    function filterTasks(searchTerm) {
+        const tasks = document.querySelectorAll(".task-label");
+        tasks.forEach((task) => {
+            const taskText = task.textContent.trim().toLowerCase();
+            if (taskText.includes(searchTerm)) {
+                task.closest("li").style.display = "block";
+            } else {
+                task.closest("li").style.display = "none";
+            }
+        });
+    }
+
+   // Arama kutusuna yazıldığında görevleri filtrele
+searchInput.addEventListener("input", function () {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    filterTasks(searchTerm);
+});
+
+function filterTasks(searchTerm) {
+    const tasks = document.querySelectorAll(".task-label");
+    tasks.forEach((task) => {
+        const taskText = task.textContent.trim().toLowerCase();
+        if (taskText.includes(searchTerm)) {
+            task.closest("li").style.display = "block";
+        } else {
+            task.closest("li").style.display = "none";
+        }
+    });
+}
+
 });
