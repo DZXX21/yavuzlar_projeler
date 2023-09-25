@@ -20,39 +20,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     taskList.addEventListener("click", function (e) {
         if (e.target && e.target.classList.contains("task")) {
-            toggleTaskStatus(e.target.dataset.id);
-        }
-    });
-
-    taskList.addEventListener("click", function (e) {
-        if (e.target && e.target.classList.contains("delete")) {
-            deleteTask(e.target.dataset.id);
-        }
-    });
-
-    taskList.addEventListener("click", function (e) {
-        if (e.target && e.target.classList.contains("edit")) {
-            const taskElement = e.target.parentElement.querySelector(".task");
-            if (taskElement.classList.contains("editing")) {
-                if (e.key === "Enter") {
-                    taskElement.contentEditable = "false";
-                    taskElement.classList.remove("editing");
-                    editTask(taskElement.dataset.id, taskElement.textContent.trim());
-                }
-            } else {
-                taskElement.contentEditable = "true";
-                taskElement.classList.add("editing");
-                taskElement.focus();
+            const taskId = e.target.dataset.id;
+            if (e.target.dataset.editing !== "true") {
+                toggleTaskStatus(taskId);
             }
         }
+        if (e.target && e.target.classList.contains("delete")) {
+            const taskId = e.target.dataset.id;
+            deleteTask(taskId);
+        }
+        if (e.target && e.target.classList.contains("edit")) {
+            const taskId = e.target.dataset.id;
+            editTask(taskId);
+        }
     });
 
-    taskList.addEventListener("keyup", function (e) {
-        if (e.target && e.target.classList.contains("task") && e.key === "Enter") {
-            const taskElement = e.target;
-            taskElement.contentEditable = "false";
-            taskElement.classList.remove("editing");
-            editTask(taskElement.dataset.id, taskElement.textContent.trim());
+    taskList.addEventListener("blur", function (e) {
+        if (e.target && e.target.classList.contains("task") && e.target.dataset.editing === "true") {
+            const taskId = e.target.dataset.id;
+            const newTaskName = e.target.textContent.trim();
+            editTask(taskId, newTaskName);
         }
     });
 
@@ -64,9 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.forEach((task) => {
                     const listItem = document.createElement("li");
                     listItem.innerHTML = `
-                        <span class="task ${task.task_status ? 'completed' : ''}" data-id="${task.id}">${task.task_name}</span>
-                        <button class="delete" data-id="${task.id}">Sil</button>
-                        <button class="edit" data-id="${task.id}">Düzenle</button>
+                        <div class="task">
+                            <input type="checkbox" class="completed-checkbox" id="task-${task.id}" ${task.task_status ? 'checked' : ''}>
+                            <label for="task-${task.id}" class="task-label ${task.task_status ? 'completed' : ''}" data-id="${task.id}" data-editing="false">${task.task_name}</label>
+                        </div>
+                        <div class="buttons">
+                            <button class="delete" data-id="${task.id}">Sil</button>
+                            <button class="edit" data-id="${task.id}">Düzenle</button>
+                        </div>
                     `;
                     taskList.appendChild(listItem);
                 });
@@ -107,18 +99,27 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function editTask(taskId, taskText) {
-        fetch(`tasks.php?id=${taskId}`, {
-            method: "PUT",
-            body: JSON.stringify({ task_name: taskText }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                loadTasks();
-                editingTaskId = null;
-            });
+    function editTask(taskId, taskText = null) {
+        if (taskText === null) {
+            // Düzenlemeyi başlat
+            const taskElement = document.querySelector(`[data-id="${taskId}"]`);
+            taskElement.contentEditable = "true";
+            taskElement.focus();
+            taskElement.dataset.editing = "true";
+        } else {
+            // Düzenlemeyi kaydet
+            fetch(`tasks.php?id=${taskId}`, {
+                method: "PUT",
+                body: JSON.stringify({ task_name: taskText }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    loadTasks();
+                    editingTaskId = null;
+                });
+        }
     }
 });

@@ -1,3 +1,4 @@
+/* Reset ve Genel Stil */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -6,6 +7,7 @@ body {
     padding: 0;
 }
 
+/* Container Stili */
 .todo-container {
     max-width: 400px;
     margin: 0 auto;
@@ -15,12 +17,14 @@ body {
     border-radius: 5px;
 }
 
+/* Başlık Stili */
 h1 {
     color: #333;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
+/* Giriş Alanı ve Ekle Butonu Stili */
 .input-container {
     display: flex;
     align-items: center;
@@ -46,6 +50,7 @@ button {
     font-size: 16px;
 }
 
+/* Liste Stili */
 ul {
     list-style: none;
     padding: 0;
@@ -63,11 +68,13 @@ li {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* Tamamlanan Görevler Stili */
 .completed {
     text-decoration: line-through;
     color: #777;
 }
 
+/* Sil ve Düzenle Butonları Stili */
 .delete,
 .edit {
     background-color: #dc3545;
@@ -83,8 +90,58 @@ li {
 .edit {
     background-color: #ffc107;
 }
-.editing {
-    border: 1px solid #007bff; /* Düzenleme sırasında görevi vurgula */
-    background-color: #f0f0f0; /* Düzenleme sırasında arka plan rengini değiştir */
+
+/* Düzenleme Modu Stili */
+.editing .task {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-right: 10px;
 }
 
+/* Navbar Stili */
+.navbar {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+}
+
+.navbar a {
+    color: white;
+}
+/* Checkbox Stili */
+.custom-control-label::before {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.custom-control-label::after {
+    content: "";
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #fff;
+    border-radius: 0.125rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.custom-checkbox .custom-control-label::after {
+    border-radius: 0.125rem;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.custom-control-input:checked ~ .custom-control-label::after {
+    display: block;
+}
