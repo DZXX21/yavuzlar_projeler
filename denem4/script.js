@@ -5,26 +5,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
     const clearSearchButton = document.getElementById("clear-search-button");
 
-    // Sunucudan görevleri getiren fonksiyon
     function getTasks() {
         fetch("tasks.php", {
             method: "GET",
         })
             .then((response) => response.json())
             .then((data) => {
-                // Görevleri listeye ekle
-                taskList.innerHTML = ""; // Önceki görevleri temizle
+                
+                taskList.innerHTML = ""; 
                 data.forEach((task) => {
                     addTaskToList(task.task_name, task.task_status, task.id);
                 });
             });
     }
 
-    // Görev listesine yeni görev eklemek için fonksiyon
+   
     function addTaskToList(taskText, completed = false, taskId) {
         const taskItem = document.createElement("li");
         taskItem.className = "task";
-        taskItem.dataset.task = taskId; // Görevi veri setine ekle
+        taskItem.dataset.task = taskId; 
         taskItem.innerHTML = `
             <input type="checkbox" class="task-checkbox" ${completed ? "checked" : ""}>
             <input type="text" value="${taskText}" ${completed ? "readonly" : ""}>
@@ -41,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const taskInput = taskItem.querySelector("input[type='text']");
         const taskCheckbox = taskItem.querySelector(".task-checkbox");
 
-        // Düzenleme, silme ve kaydetme işlevselliği burada eklenir
+      
         editButton.addEventListener("click", function () {
             taskInput.removeAttribute("readonly");
             taskInput.focus();
@@ -56,21 +55,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const newTaskText = taskInput.value.trim();
             if (newTaskText !== "") {
-                const taskId = taskItem.dataset.task; // taskId'i al
-                editTask(taskId, newTaskText); // düzenlemeyi çağır
+                const taskId = taskItem.dataset.task; 
+                editTask(taskId, newTaskText); 
             }
         });
 
         deleteButton.addEventListener("click", function () {
-            const taskId = taskItem.dataset.task; // taskId'i al
+            const taskId = taskItem.dataset.task; 
             taskItem.remove();
-            deleteTask(taskId); // silmeyi çağır
+            deleteTask(taskId); 
         });
     }
 
-    // Görevi sunucuda düzenlemek için fonksiyon
+   
     function editTask(taskId, newTaskText) {
-        fetch("tasks.php?id=" + taskId, {
+        fetch("tasks.php?task_name=" + encodeURIComponent(taskId), {
             method: "PUT",
             body: JSON.stringify({ new_task_name: newTaskText }),
             headers: {
@@ -81,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
                 if (data.message) {
                     console.log(data.message);
-                    // Görevi arayüzde güncelle
+                    e
                     const taskItem = document.querySelector(`li[data-task="${taskId}"]`);
                     if (taskItem) {
                         taskItem.querySelector("input[type='text']").value = newTaskText;
@@ -92,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Görevi sunucuya eklemek için fonksiyon
+
     function addTaskToServer(taskText) {
         fetch("tasks.php", {
             method: "POST",
@@ -105,14 +104,14 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
                 if (data.message) {
                     console.log(data.message);
-                    addTaskToList(taskText);
+                    getTasks(); 
                 } else if (data.error) {
                     console.error(data.error);
                 }
             });
     }
 
-    // Görevi sunucudan silmek için fonksiyon
+    
     function deleteTask(taskId) {
         fetch("tasks.php?id=" + taskId, {
             method: "DELETE",
@@ -132,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Sayfa yüklendiğinde mevcut görevleri getir
+    
     getTasks();
 
     taskForm.addEventListener("submit", function (e) {
@@ -146,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Arama işlevselliği ekleniyor
+   
     clearSearchButton.addEventListener("click", function () {
         searchInput.value = "";
         const tasks = document.querySelectorAll(".task");
@@ -169,5 +168,27 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+ 
+function editTask(taskId, newTaskText) {
+    fetch("tasks.php?id=" + taskId, {  
+        method: "PUT",
+        body: JSON.stringify({ new_task_name: newTaskText }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.message) {
+                console.log(data.message);
+                const taskItem = document.querySelector(`li[data-task="${taskId}"]`);
+                if (taskItem) {
+                    taskItem.querySelector("input[type='text']").value = newTaskText;
+                }
+            } else if (data.error) {
+                console.error(data.error);
+            }
+        });
+}
+
 });
-    
