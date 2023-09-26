@@ -8,9 +8,42 @@ if (!isset($_SESSION["kullanici_adi"])) {
     exit();
 }
 
-// Kullanıcı oturum açtıysa, sayfanın geri kalanını göster
-?>
+// Veritabanı bağlantısı ve diğer konfigürasyon ayarları
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "todolist";
 
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if (!$conn) {
+    die("Veritabanına bağlanılamadı: " . mysqli_connect_error());
+}
+
+// Görev eklemek için POST isteğini işle
+if (isset($_POST['new-task'])) {
+    $taskText = $_POST['new-task'];
+
+    $insertQuery = "INSERT INTO tasks (task_text, completed) VALUES ('$taskText', 0)";
+    if (mysqli_query($conn, $insertQuery)) {
+        echo "Görev başarıyla eklendi.";
+    } else {
+        echo "Görev eklenirken bir hata oluştu: " . mysqli_error($conn);
+    }
+}
+
+// Görevi silmek için POST isteğini işle
+if (isset($_POST['delete-task'])) {
+    $taskId = $_POST['delete-task'];
+
+    $deleteQuery = "DELETE FROM tasks WHERE id = $taskId";
+    if (mysqli_query($conn, $deleteQuery)) {
+        echo "Görev başarıyla silindi.";
+    } else {
+        echo "Görev silinirken bir hata oluştu: " . mysqli_error($conn);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
