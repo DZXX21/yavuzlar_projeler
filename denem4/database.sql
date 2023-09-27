@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2023 at 09:25 PM
+-- Generation Time: Sep 27, 2023 at 09:37 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -60,8 +60,8 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `task_name`, `is_completed`, `created_at`) VALUES
-(51, 'hanims <3 taha', 0, '2023-09-26 01:55:40'),
-(52, 'taha 32 taha', 0, '2023-09-26 01:55:52');
+(51, 'hanims <3 tahass', 0, '2023-09-26 01:55:40'),
+(52, 'taha 32 taha  sq', 0, '2023-09-26 01:55:52');
 
 --
 -- Indexes for dumped tables
