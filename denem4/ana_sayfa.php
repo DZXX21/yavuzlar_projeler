@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+// Oturumu kontrol et
+if (!isset($_SESSION["kullanici_adi"])) {
+    // Oturum açmamış kullanıcıyı "login.html" sayfasına yönlendir
+    header("Location: login.html");
+    exit();
+}
+
+// Veritabanı bağlantısı ve diğer konfigürasyon ayarları
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -12,16 +20,11 @@ if (!$conn) {
     die("Veritabanına bağlanılamadı: " . mysqli_connect_error());
 }
 
-if (!isset($_SESSION["kullanici_id"])) {
-    header("Location: login.html");
-    exit();
-}
-
+// Görev eklemek için POST isteğini işle
 if (isset($_POST['new-task'])) {
     $taskText = $_POST['new-task'];
-    $userId = $_SESSION["kullanici_id"];
 
-    $insertQuery = "INSERT INTO tasks (user_id, task_text, completed) VALUES ($userId, '$taskText', 0)";
+    $insertQuery = "INSERT INTO tasks (task_text, completed) VALUES ('$taskText', 0)";
     if (mysqli_query($conn, $insertQuery)) {
         echo "Görev başarıyla eklendi.";
     } else {
@@ -29,30 +32,18 @@ if (isset($_POST['new-task'])) {
     }
 }
 
+// Görevi silmek için POST isteğini işle
 if (isset($_POST['delete-task'])) {
     $taskId = $_POST['delete-task'];
-    $userId = $_SESSION["kullanici_id"];
 
-    $deleteQuery = "DELETE FROM tasks WHERE id = $taskId AND user_id = $userId";
+    $deleteQuery = "DELETE FROM tasks WHERE id = $taskId";
     if (mysqli_query($conn, $deleteQuery)) {
         echo "Görev başarıyla silindi.";
     } else {
         echo "Görev silinirken bir hata oluştu: " . mysqli_error($conn);
     }
 }
-
-$sql = "SELECT * FROM tasks WHERE user_id = $userId";
-$result = mysqli_query($conn, $sql);
-
-$tasks = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $tasks[] = $row;
-}
-
-echo json_encode($tasks);
 ?>
-
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
