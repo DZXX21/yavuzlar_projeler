@@ -52,6 +52,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 echo json_encode($tasks);
 ?>
 
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
