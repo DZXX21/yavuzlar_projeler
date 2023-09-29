@@ -1,3 +1,7 @@
+<?php
+
+// HTML kodunu değişkenlere atayın.
+$html = 
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -27,3 +31,9 @@
     </div>
 </body>
 </html>
+
+
+// HTML kodunu ekrana yazdırın.
+echo $html;
+
+?>
