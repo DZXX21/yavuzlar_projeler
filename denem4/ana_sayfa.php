@@ -3,8 +3,8 @@ session_start();
 
 // Oturumu kontrol et
 if (!isset($_SESSION["kullanici_adi"])) {
-    // Oturum açmamış kullanıcıyı "login.html" sayfasına yönlendir
-    header("Location: login.html");
+ 
+    header("Location: login.php");
     exit();
 }
 
@@ -55,6 +55,7 @@ if (isset($_POST['delete-task'])) {
 <body>
     <div id="header">
         <h1>Görev Listesi</h1>
+        <p>Hoş geldiniz, <?php echo $_SESSION["kullanici_adi"]; ?></p> <!-- Kullanıcı adını görüntülemek için bu satırı ekledik -->
         <a href="logout.php">Çıkış Yap</a>
     </div>
     

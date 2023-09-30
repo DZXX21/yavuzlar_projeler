@@ -23,7 +23,18 @@
                     <button type="submit" class="btn btn-primary">Kayıt Ol</button>
                 </form>
             </div>
+            <div class="mt-3 text-center">
+                    <p>Hesabınız varmı Giris Yapın !</p> 
+                    <a href="login.php" class="btn btn-success">Kayıt Ol</a>
+                </div>
         </div>
     </div>
+
+    <script>
+        // Kayıt işlemi başarıyla tamamlandığında kullanıcıyı yönlendirme
+        function redirectToIndex() {
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
 </html>
