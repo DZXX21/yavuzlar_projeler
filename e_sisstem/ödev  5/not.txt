@@ -1,0 +1,14 @@
+CREATE TABLE kisiler (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    isim VARCHAR(255) NOT NULL,
+    soyisim VARCHAR(255) NOT NULL,
+    rol VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE ogrenci_odevleri (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ogrenci_id INT NOT NULL,
+    odev_adi VARCHAR(255) NOT NULL,
+    odev_tamamlandi BOOLEAN NOT NULL
+);

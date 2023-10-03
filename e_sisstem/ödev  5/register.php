@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Kayıt Sayfası</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 <body>
