@@ -1,0 +1,24 @@
+<php
+$uploadsDirectory = 'uploads/'; // Dosyaların taşınacağı hedef klasör
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dosya'])) {
+    $uploadedFile = $_FILES['dosya'];
+
+    // Dosyanın yüklendiği geçici konum
+    $temporaryFile = $uploadedFile['tmp_name'];
+
+    // Yüklenen dosyanın adı
+    $filename = $uploadedFile['name'];
+
+    // Dosyanın hedef yolunu belirleyin
+    $destination = $uploadsDirectory . $filename;
+
+    // Dosyayı hedef klasöre taşı
+    if (move_uploaded_file($temporaryFile, $destination)) {
+        echo 'Dosya başarıyla yüklendi ve taşındı.';
+    } else {
+        echo 'Dosya yüklenirken bir hata oluştu.';
+    }
+}
+
+?>

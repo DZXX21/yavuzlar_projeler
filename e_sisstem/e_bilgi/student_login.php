@@ -64,6 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php echo $login_error; ?>
             </div>
         <?php endif; ?>
+        
+        <!-- Kayıt olma butonu -->
+        <p>Hesabınız yoksa <a href="kayıt.php">kayıt olun</a>.</p>
     </div>
 </body>
 </html>

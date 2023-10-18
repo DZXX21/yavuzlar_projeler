@@ -1,3 +1,5 @@
+
+
 <?php
 session_start();
 
@@ -37,7 +39,10 @@ if ($result->num_rows == 1) {
 }
 
 // Öğrencinin ödevlerini veritabanından çek
-$sql = "SELECT * FROM assignments WHERE student_id = (SELECT id FROM students WHERE student_username = '$student_username')";
+$sql = "SELECT A.id, A.title, A.deadline, A.status, A.teacher_name
+        FROM assignments A
+        JOIN students S ON A.student_id = S.id
+        WHERE S.student_username = '$student_username'";
 $result = $conn->query($sql);
 ?>
 
@@ -45,50 +50,101 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Öğrenci Paneli</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0074d9;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        /* Öğrenci bilgi tablosu stilleri */
+        #student-info-table {
+            table-layout: fixed;
+        }
+
+        #student-info-table td {
+            width: 50%;
+        }
+
+        /* Ödevler tablosu stilleri */
+        #assignments-table {
+            table-layout: fixed;
+        }
+
+        #assignments-table th, #assignments-table td {
+            max-width: 200px;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
         <h2>Öğrenci Bilgileri</h2>
-        <table>
+        <table id="student-info-table">
             <tbody>
                 <tr>
                     <td><strong>Öğrenci Kullanıcı Adı:</strong></td>
                     <td><?php echo isset($student_username) ? $student_username : 'Bilinmiyor'; ?></td>
                 </tr>
-                <tr>
-                    <td><strong>İsim:</strong></td>
-                    <td><?php echo isset($isim) ? $isim : 'Bilinmiyor'; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>Soyisim:</strong></td>
-                    <td><?php echo isset($soyisim) ? $soyisim : 'Bilinmiyor'; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>Öğrenci Numarası:</strong></td>
-                    <td><?php echo isset($numara) ? $numara : 'Bilinmiyor'; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>Sınıf:</strong></td>
-                    <td><?php echo isset($sinif) ? $sinif : 'Bilinmiyor'; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>TC Kimlik:</strong></td>
-                    <td><?php echo isset($tc_kimlik) ? $tc_kimlik : 'Bilinmiyor'; ?></td>
-                </tr>
+                <!-- Diğer bilgiler buraya eklenebilir -->
             </tbody>
         </table>
 
         <h2>Ödevler</h2>
-        <table>
+        <table id="assignments-table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Öğretmen</th>
                     <th>Başlık</th>
-                    <th>Açıklama</th>
                     <th>Son Teslim Tarihi</th>
                     <th>Durumu</th>
+                    <th>Detaylar</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,11 +153,11 @@ $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $row["id"] . "</td>";
-                        echo "<td>" . $row["teacher_id"] . "</td>";
+                        echo "<td>" . $row["teacher_name"] . "</td>";
                         echo "<td>" . $row["title"] . "</td>";
-                        echo "<td>" . $row["description"] . "</td>";
                         echo "<td>" . $row["deadline"] . "</td>";
                         echo "<td>" . $row["status"] . "</td>";
+                        echo "<td><a href='assignment_details.php?assignment_id=" . $row["id"] . "'>Detayları Gör</a></td>";
                         echo "</tr>";
                     }
                 } else {

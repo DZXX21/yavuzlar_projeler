@@ -20,6 +20,7 @@ if (!isset($_SESSION["teacher_logged_in"]) || $_SESSION["teacher_logged_in"] !==
 }
 
 $teacher_username = $_SESSION["teacher_username"];
+$teacher_name = $_SESSION["teacher_username"];
 $teacher_class = "7/a"; // Varsayılan sınıf
 
 // Kullanıcının seçtiği sınıfı al
@@ -35,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignment"])) {
     $deadline = $_POST["deadline"];
 
     // Öğrenciye ödevi veritabanına ekle
-    $sql = "INSERT INTO assignments (teacher_id, student_id, title, description, deadline, status) VALUES ('$teacher_username', '$student_id', '$title', '$description', '$deadline', 'Not Submitted')";
+    $sql = "INSERT INTO assignments (teacher_id, student_id, title, description, deadline, status, teacher_name) VALUES ('$teacher_username', '$student_id', '$title', '$description', '$deadline', 'Not Submitted', '$teacher_name')";
     if ($conn->query($sql) === true) {
         echo "Ödev başarıyla gönderildi.";
     } else {
@@ -54,7 +55,6 @@ $class_result = $conn->query($sql);
     <title>Öğretmen Sayfası</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-        /* CSS stilleri burada bulunuyor */
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
@@ -64,7 +64,7 @@ $class_result = $conn->query($sql);
 
         .container {
             background-color: #fff;
-            max-width: 1000px; /* Sayfa genişliği artırıldı */
+            max-width: 1000px;
             margin: 20px auto;
             padding: 20px;
             border-radius: 5px;
@@ -90,38 +90,17 @@ $class_result = $conn->query($sql);
             background-color: #f2f2f2;
         }
 
-        form {
-            margin: 0;
-            padding: 0;
+        a {
+            text-decoration: none;
+            color: #0074d9;
         }
 
-        input[type="text"], input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        a:hover {
+            text-decoration: underline;
         }
 
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        h2 {
+            font-size: 24px;
         }
     </style>
 </head>
@@ -177,6 +156,8 @@ $class_result = $conn->query($sql);
 
         <!-- Öğrencilere Ödev Gönderme Formu -->
         <h2>Ödev Gönderme</h2>
+        <a href="student_assignments.php" target="_blank">Öğrenci Gönderdiği Ödevleri Gör</a>
+
         <form method='post'>
             <input type='text' name='student_id' placeholder='Öğrenci ID' required>
             <input type='text' name='title' placeholder='Ödev Başlığı' required>
