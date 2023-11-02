@@ -16,8 +16,8 @@ type User struct {
 
 func main() {
 	users := []User{
-		{"kullanici1", "sifre1"},
-		{"kullanici2", "sifre2"},
+		{"taha", "icardi"},
+		{"abbs", "ss"},
 		{"admin", "adminpass"},
 	}
 
