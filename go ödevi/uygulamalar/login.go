@@ -24,7 +24,7 @@ func main() {
 		{"kullanici2", "sifre2"},
 	}
 
-	loginAttempts := make(map[string]int)
+	attemptCount := 0
 
 	for {
 		fmt.Print("Kullanıcı Adı: ")
@@ -37,37 +37,38 @@ func main() {
 		var password string
 		fmt.Scanln(&password)
 
-		if username == adminAccount.Username && password == adminAccount.Password {
-			adminMenu()
-			continue 
-		}
-
 		
-		user, ok := findUser(users, username)
-
-	
-		if !ok {
-			loginAttempts[username]++
-			if loginAttempts[username] >= maxLoginAttempts {
-				fmt.Println("Çok fazla hatalı giriş denemesi yaptınız. Program sonlandırılıyor.")
-				return
+		if username == adminAccount.Username {
+			if password == adminAccount.Password {
+				adminMenu()
+				break 
+			} else {
+				attemptCount++
+				fmt.Println("Hatalı şifre. Admin şifresini tekrar deneyin.")
+				
+				logLogin(username, false)
+			
+				if attemptCount >= maxLoginAttempts {
+					fmt.Println("Çok fazla hatalı giriş denemesi yaptınız. Program sonlandırılıyor.")
+					return
+				}
+				continue
 			}
-			fmt.Printf("Geçersiz kullanıcı adı. Giriş denemesi: %d/%d. Tekrar deneyin.\n", loginAttempts[username], maxLoginAttempts)
-			continue
 		}
 
 	
-		if user.Password == password {
+		user, ok := findUser(users, username)
+		if !ok || user.Password != password {
+			attemptCount++
+			logLogin(username, false)
+			fmt.Printf("Geçersiz kullanıcı adı veya şifre. Giriş denemesi: %d/%d. Tekrar deneyin.\n", attemptCount, maxLoginAttempts)
+		} else {
 			fmt.Println("Başarılı giriş!")
 			break 
-		} else {
-			loginAttempts[username]++
-			logLogin(username, false)
-			fmt.Printf("Hatalı şifre. Giriş denemesi: %d/%d\n", loginAttempts[username], maxLoginAttempts)
 		}
 
 		
-		if loginAttempts[username] >= maxLoginAttempts {
+		if attemptCount >= maxLoginAttempts {
 			fmt.Println("Çok fazla hatalı giriş denemesi yaptınız. Program sonlandırılıyor.")
 			return
 		}
@@ -75,9 +76,12 @@ func main() {
 }
 
 func adminMenu() {
+	
 	fmt.Println("\nAdmin menüsüne hoşgeldiniz.")
 	
 }
+
+
 
 func findUser(users []User, username string) (*User, bool) {
 	for i := range users {
