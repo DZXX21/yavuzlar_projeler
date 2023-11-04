@@ -3,22 +3,25 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
 const maxLoginAttempts = 5
 const logFile = "logs.txt"
+const timeFormat = "2006-01-02 15:04:05"
 
 type User struct {
 	Username string
 	Password string
 }
 
+var adminAccount = User{Username: "admin", Password: "adminpass"}
+
 func main() {
 	users := []User{
-		{"taha", "icardi"},
-		{"abbs", "ss"},
-		{"admin", "adminpass"},
+		{"kullanici1", "sifre1"},
+		{"kullanici2", "sifre2"},
 	}
 
 	loginAttempts := make(map[string]int)
@@ -27,36 +30,96 @@ func main() {
 		fmt.Print("Kullanıcı Adı: ")
 		var username string
 		fmt.Scanln(&username)
+
+		username = strings.ToLower(username)
+
 		fmt.Print("Şifre: ")
 		var password string
 		fmt.Scanln(&password)
 
-		if isAdmin(username, password) {
+		// Admin kontrolü
+		if username == adminAccount.Username && password == adminAccount.Password {
 			adminMenu()
-			break
+			continue // Admin menüden çıktıktan sonra kullanıcı giriş ekranına döner
 		}
 
-		user, userIndex := findUser(users, username)
-		if user != nil {
+		// Kullanıcı adı kontrolü
+		user, ok := findUser(users, username)
+
+		// Kullanıcı adı geçerli değilse
+		if !ok {
+			loginAttempts[username]++
 			if loginAttempts[username] >= maxLoginAttempts {
 				fmt.Println("Çok fazla hatalı giriş denemesi yaptınız. Program sonlandırılıyor.")
-				break
+				return
 			}
+			fmt.Printf("Geçersiz kullanıcı adı. Giriş denemesi: %d/%d. Tekrar deneyin.\n", loginAttempts[username], maxLoginAttempts)
+			continue
+		}
 
-			fmt.Printf("Giriş denemesi: %d/%d\n", loginAttempts[username]+1, maxLoginAttempts)
-
-			if user.Password == password {
-				loginAttempts[username] = 0
-				logLogin(username, true)
-				fmt.Println("Başarılı giriş!")
-			} else {
-				loginAttempts[username]++
-				logLogin(username, false)
-				fmt.Println("Hatalı giriş!")
-			}
+		// Şifre kontrolü
+		if user.Password == password {
+			fmt.Println("Başarılı giriş!")
+			break // Giriş başarılı, döngüyü kır
 		} else {
-			fmt.Println("Geçersiz kullanıcı adı. Tekrar deneyin.")
+			loginAttempts[username]++
+			logLogin(username, false)
+			fmt.Printf("Hatalı şifre. Giriş denemesi: %d/%d\n", loginAttempts[username], maxLoginAttempts)
+		}
+
+		// Max deneme sayısına ulaşıldıysa programı sonlandır
+		if loginAttempts[username] >= maxLoginAttempts {
+			fmt.Println("Çok fazla hatalı giriş denemesi yaptınız. Program sonlandırılıyor.")
+			return
 		}
 	}
 }
 
+func adminMenu() {
+	// Admin menüsü işlevselliği
+	fmt.Println("\nAdmin menüsüne hoşgeldiniz.")
+	// ... Admin menüsü işlevleri
+}
+
+func findUser(users []User, username string) (*User, bool) {
+	for i := range users {
+		if strings.ToLower(users[i].Username) == username {
+			return &users[i], true
+		}
+	}
+	return nil, false
+}
+
+func logLogin(username string, success bool) {
+	status := "Başarısız"
+	if success {
+		status = "Başarılı"
+	}
+	logEntry := fmt.Sprintf("Kullanıcı Adı: %s, Giriş Tarihi: %s, Giriş Durumu: %s\n",
+		username, time.Now().Format(timeFormat), status)
+	appendToFile(logFile, logEntry)
+}
+
+func viewLogs() {
+	data, err := os.ReadFile(logFile)
+	if err != nil {
+		fmt.Printf("Log dosyası okunamıyor: %v\n", err)
+		return
+	}
+
+	fmt.Println("Log Kayıtları:")
+	fmt.Println(string(data))
+}
+
+func appendToFile(fileName, text string) {
+	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Printf("Log dosyasına erişim sağlanamıyor: %v\n", err)
+		return
+	}
+	defer file.Close()
+
+	if _, err = file.WriteString(text); err != nil {
+		fmt.Printf("Log dosyasına yazılamıyor: %v\n", err)
+	}
+}
